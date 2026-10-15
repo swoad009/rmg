@@ -47,10 +47,10 @@ function AuthPage() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin + "/dashboard", data: { full_name: name } },
+          options: { emailRedirectTo: window.location.origin + "/auth", data: { full_name: name } },
         });
         if (error) throw error;
-        toast.success("Check your email to confirm your account.");
+        toast.success("Account created. Open the confirmation link in your email, then sign in here.", { duration: 8000 });
         setMode("signin");
       } else {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -68,9 +68,11 @@ function AuthPage() {
   }
 
   async function google() {
+    setBusy(true);
     const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
     if (r.error) {
       toast.error(r.error.message);
+      setBusy(false);
       return;
     }
     if (r.redirected) return;
@@ -117,11 +119,11 @@ function AuthPage() {
           )}
 
           <Button type="submit" className="h-12 w-full text-base" disabled={busy}>
-            {mode === "signin" ? "Sign in" : mode === "signup" ? "Create account" : "Send reset link"}
+            {busy ? "Please wait…" : mode === "signin" ? "Sign in" : mode === "signup" ? "Create account" : "Send reset link"}
           </Button>
 
           {mode !== "forgot" && (
-            <Button type="button" variant="outline" className="h-12 w-full" onClick={google}>
+            <Button type="button" variant="outline" className="h-12 w-full" onClick={google} disabled={busy}>
               Continue with Google
             </Button>
           )}
