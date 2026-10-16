@@ -121,8 +121,17 @@ function Dashboard() {
 
       <div className="flex-1">
         <header className="flex items-center justify-between border-b bg-card px-4 py-3">
-          <button onClick={() => setOpen(true)} className="p-2 lg:hidden" aria-label="Open menu">
-            <Menu className="h-6 w-6" />
+          <button
+            onClick={() => setOpen(true)}
+            className="rounded-lg p-2 transition-all duration-200 hover:bg-accent active:scale-90 lg:hidden"
+            aria-label="Open menu"
+          >
+            <Menu
+              className={cn(
+                "h-6 w-6 transition-transform duration-300",
+                open && "rotate-90",
+              )}
+            />
           </button>
           <div className="ml-auto flex items-center gap-3">
             <div className="text-right">
