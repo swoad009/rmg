@@ -40,8 +40,8 @@ function ResetPassword() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (strength < 2) return toast.error("Please choose a stronger password.");
-    if (password !== confirm) return toast.error("Passwords don't match.");
+    if (strength < 2) { toast.error("Please choose a stronger password."); return; }
+    if (password !== confirm) { toast.error("Passwords don't match."); return; }
     setBusy(true);
     const { error } = await supabase.auth.updateUser({ password });
     setBusy(false);
