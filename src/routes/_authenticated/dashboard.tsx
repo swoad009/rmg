@@ -50,16 +50,19 @@ function Dashboard() {
     navigate({ to: "/auth", replace: true });
   }
 
-  const nav = (
+  const nav = (stagger = false) => (
     <nav className="flex flex-col gap-1">
-      {items.map((i) => (
+      {items.map((i, idx) => (
         <div
           key={i.key}
+          style={stagger ? { transitionDelay: `${80 + idx * 40}ms` } : undefined}
           className={cn(
-            "flex h-12 items-center gap-3 rounded-lg px-3 text-sm font-medium",
+            "flex h-12 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-all duration-200 ease-out active:scale-[0.98]",
+            stagger &&
+              (open ? "translate-x-0 opacity-100" : "translate-x-6 opacity-0"),
             i.key === "dashboard"
               ? "bg-sidebar-accent text-sidebar-accent-foreground"
-              : "text-sidebar-foreground/70",
+              : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
           )}
         >
           <i.icon className="h-5 w-5" />
@@ -81,17 +84,40 @@ function Dashboard() {
         {nav}
       </aside>
 
-      {open && (
-        <div className="fixed inset-0 z-40 bg-sidebar p-4 lg:hidden">
+      {/* Mobile menu: backdrop fades, panel slides in, items stagger */}
+      <div
+        className={cn(
+          "fixed inset-0 z-40 lg:hidden",
+          open ? "pointer-events-auto" : "pointer-events-none",
+        )}
+        aria-hidden={!open}
+      >
+        <div
+          onClick={() => setOpen(false)}
+          className={cn(
+            "absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300",
+            open ? "opacity-100" : "opacity-0",
+          )}
+        />
+        <div
+          className={cn(
+            "absolute inset-y-0 left-0 w-72 max-w-[85vw] bg-sidebar p-4 shadow-2xl transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]",
+            open ? "translate-x-0" : "-translate-x-full",
+          )}
+        >
           <div className="mb-6 flex items-center justify-between">
             <Brand />
-            <button onClick={() => setOpen(false)} className="p-2 text-sidebar-foreground" aria-label="Close menu">
+            <button
+              onClick={() => setOpen(false)}
+              className="rounded-lg p-2 text-sidebar-foreground transition-colors hover:bg-sidebar-accent active:scale-90"
+              aria-label="Close menu"
+            >
               <X className="h-6 w-6" />
             </button>
           </div>
-          {nav}
+          {nav(true)}
         </div>
-      )}
+      </div>
 
       <div className="flex-1">
         <header className="flex items-center justify-between border-b bg-card px-4 py-3">
