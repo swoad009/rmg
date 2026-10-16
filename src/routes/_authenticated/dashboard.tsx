@@ -81,7 +81,7 @@ function Dashboard() {
     <div className="min-h-screen bg-background lg:flex">
       <aside className="hidden w-64 shrink-0 flex-col gap-6 bg-sidebar p-4 lg:flex">
         <Brand />
-        {nav}
+        {nav()}
       </aside>
 
       {/* Mobile menu: backdrop fades, panel slides in, items stagger */}
