@@ -13,3 +13,4 @@
 - Roles live in `public.user_roles` (enum `app_role`) checked via `has_role()`; never derive permissions from profile data. Why: prevents privilege escalation.
 - Module visibility per role is defined once in `src/lib/roles.ts` (NAV_ITEMS). Why: single source for role-based navigation.
 - First signed-up user gets `owner`, later users default to `merchandiser` (DB trigger). Why: bootstraps an admin without manual setup.
+- Every business table has `org_id` (default `current_org_id()`); RLS reads/writes require `is_org_member(org_id)`. Why: organization-based multi-tenancy.
