@@ -55,6 +55,66 @@ export type Database = {
           },
         ]
       }
+      bom_items: {
+        Row: {
+          category: string
+          consumption_per_pc: number
+          created_at: string
+          description: string | null
+          id: string
+          item_name: string
+          org_id: string | null
+          style_id: string
+          supplier_name: string | null
+          unit: string
+          unit_price: number
+          wastage_pct: number
+        }
+        Insert: {
+          category?: string
+          consumption_per_pc?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          item_name: string
+          org_id?: string | null
+          style_id: string
+          supplier_name?: string | null
+          unit?: string
+          unit_price?: number
+          wastage_pct?: number
+        }
+        Update: {
+          category?: string
+          consumption_per_pc?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          item_name?: string
+          org_id?: string | null
+          style_id?: string
+          supplier_name?: string | null
+          unit?: string
+          unit_price?: number
+          wastage_pct?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bom_items_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bom_items_style_id_fkey"
+            columns: ["style_id"]
+            isOneToOne: false
+            referencedRelation: "styles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bundles: {
         Row: {
           bundle_no: string
@@ -114,28 +174,52 @@ export type Database = {
       }
       buyers: {
         Row: {
+          address: string | null
+          brand: string | null
+          code: string | null
           contact_email: string | null
+          contact_person: string | null
           country: string
           created_at: string
+          currency: string
           id: string
           name: string
           org_id: string | null
+          payment_terms: string | null
+          phone: string | null
+          status: string
         }
         Insert: {
+          address?: string | null
+          brand?: string | null
+          code?: string | null
           contact_email?: string | null
+          contact_person?: string | null
           country: string
           created_at?: string
+          currency?: string
           id?: string
           name: string
           org_id?: string | null
+          payment_terms?: string | null
+          phone?: string | null
+          status?: string
         }
         Update: {
+          address?: string | null
+          brand?: string | null
+          code?: string | null
           contact_email?: string | null
+          contact_person?: string | null
           country?: string
           created_at?: string
+          currency?: string
           id?: string
           name?: string
           org_id?: string | null
+          payment_terms?: string | null
+          phone?: string | null
+          status?: string
         }
         Relationships: [
           {
@@ -143,6 +227,97 @@ export type Database = {
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      costings: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          cm_cost: number
+          commercial_pct: number
+          costing_no: string
+          created_at: string
+          currency: string
+          fabric_cost: number
+          fob_price: number | null
+          id: string
+          inquiry_id: string | null
+          notes: string | null
+          org_id: string | null
+          other_cost: number
+          profit_pct: number
+          status: string
+          style_id: string | null
+          trims_cost: number
+          version: number
+          washing_cost: number
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          cm_cost?: number
+          commercial_pct?: number
+          costing_no: string
+          created_at?: string
+          currency?: string
+          fabric_cost?: number
+          fob_price?: number | null
+          id?: string
+          inquiry_id?: string | null
+          notes?: string | null
+          org_id?: string | null
+          other_cost?: number
+          profit_pct?: number
+          status?: string
+          style_id?: string | null
+          trims_cost?: number
+          version?: number
+          washing_cost?: number
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          cm_cost?: number
+          commercial_pct?: number
+          costing_no?: string
+          created_at?: string
+          currency?: string
+          fabric_cost?: number
+          fob_price?: number | null
+          id?: string
+          inquiry_id?: string | null
+          notes?: string | null
+          org_id?: string | null
+          other_cost?: number
+          profit_pct?: number
+          status?: string
+          style_id?: string | null
+          trims_cost?: number
+          version?: number
+          washing_cost?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "costings_inquiry_id_fkey"
+            columns: ["inquiry_id"]
+            isOneToOne: false
+            referencedRelation: "inquiries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "costings_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "costings_style_id_fkey"
+            columns: ["style_id"]
+            isOneToOne: false
+            referencedRelation: "styles"
             referencedColumns: ["id"]
           },
         ]
@@ -200,6 +375,72 @@ export type Database = {
           },
           {
             foreignKeyName: "fabric_rolls_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inquiries: {
+        Row: {
+          buyer_id: string
+          created_at: string
+          currency: string
+          id: string
+          inquiry_no: string
+          merchandiser_id: string | null
+          notes: string | null
+          org_id: string | null
+          product_type: string
+          status: string
+          style_ref: string | null
+          target_price: number | null
+          target_qty: number
+          target_ship_date: string | null
+        }
+        Insert: {
+          buyer_id: string
+          created_at?: string
+          currency?: string
+          id?: string
+          inquiry_no: string
+          merchandiser_id?: string | null
+          notes?: string | null
+          org_id?: string | null
+          product_type: string
+          status?: string
+          style_ref?: string | null
+          target_price?: number | null
+          target_qty?: number
+          target_ship_date?: string | null
+        }
+        Update: {
+          buyer_id?: string
+          created_at?: string
+          currency?: string
+          id?: string
+          inquiry_no?: string
+          merchandiser_id?: string | null
+          notes?: string | null
+          org_id?: string | null
+          product_type?: string
+          status?: string
+          style_ref?: string | null
+          target_price?: number | null
+          target_qty?: number
+          target_ship_date?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inquiries_buyer_id_fkey"
+            columns: ["buyer_id"]
+            isOneToOne: false
+            referencedRelation: "buyers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inquiries_org_id_fkey"
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
@@ -541,6 +782,79 @@ export type Database = {
           },
         ]
       }
+      styles: {
+        Row: {
+          buyer_id: string
+          colors: string[]
+          created_at: string
+          description: string | null
+          fabric_desc: string | null
+          gsm: number | null
+          id: string
+          inquiry_id: string | null
+          org_id: string | null
+          product_type: string | null
+          size_color_qty: Json
+          sizes: string[]
+          status: string
+          style_no: string
+        }
+        Insert: {
+          buyer_id: string
+          colors?: string[]
+          created_at?: string
+          description?: string | null
+          fabric_desc?: string | null
+          gsm?: number | null
+          id?: string
+          inquiry_id?: string | null
+          org_id?: string | null
+          product_type?: string | null
+          size_color_qty?: Json
+          sizes?: string[]
+          status?: string
+          style_no: string
+        }
+        Update: {
+          buyer_id?: string
+          colors?: string[]
+          created_at?: string
+          description?: string | null
+          fabric_desc?: string | null
+          gsm?: number | null
+          id?: string
+          inquiry_id?: string | null
+          org_id?: string | null
+          product_type?: string | null
+          size_color_qty?: Json
+          sizes?: string[]
+          status?: string
+          style_no?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "styles_buyer_id_fkey"
+            columns: ["buyer_id"]
+            isOneToOne: false
+            referencedRelation: "buyers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "styles_inquiry_id_fkey"
+            columns: ["inquiry_id"]
+            isOneToOne: false
+            referencedRelation: "inquiries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "styles_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -575,6 +889,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_merch_writer: { Args: never; Returns: boolean }
       is_org_member: { Args: { _org: string }; Returns: boolean }
     }
     Enums: {
