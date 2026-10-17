@@ -1,4 +1,15 @@
 # Roadmap (RMG ops app)
 - [x] Step 1: Setup, auth (email + Google), password reset, roles, protected dashboard
 - [x] Step 2: Database design + sample data
-- [ ] Step 3–11: Dashboard, orders, inventory, QR, scanning, production, QC, reports, AI LC
+- [x] Mobile menu animation
+- [x] Stage 1 audit + plan
+- [x] S1.1 Organizations (multi-company) + data scoped per organization
+- [ ] S1.2 Automatic audit log
+- [ ] S1.3 Buyers page
+- [ ] S1.4 Inquiries
+- [ ] S1.5 Styles & BOM
+- [ ] S1.6 Costing + approval
+- [ ] S1.7 Samples
+- [ ] S1.8 Buyer PO (upgrade orders)
+- [ ] S1.9 T&A
+- [ ] S1.10 Dashboard upgrade
