@@ -5,11 +5,11 @@
 - [x] Stage 1 audit + plan
 - [x] S1.1 Organizations (multi-company) + data scoped per organization
 - [x] S1.2 Automatic audit log
-- [ ] S1.3 Buyers page
-- [ ] S1.4 Inquiries
-- [ ] S1.5 Styles & BOM
-- [ ] S1.6 Costing + approval
-- [ ] S1.7 Samples
+- [x] S1.3 Buyers page
+- [x] S1.4 Inquiries
+- [x] S1.5 Styles & BOM
+- [x] S1.6 Costing + approval
+- [x] S1.7 Samples
 - [ ] S1.8 Buyer PO (upgrade orders)
 - [ ] S1.9 T&A
 - [ ] S1.10 Dashboard upgrade

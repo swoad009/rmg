@@ -14,9 +14,12 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedBuyersRouteImport } from './routes/_authenticated/buyers'
+import { Route as AuthenticatedCostingsRouteImport } from './routes/_authenticated/costings'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedInquiriesRouteImport } from './routes/_authenticated/inquiries'
+import { Route as AuthenticatedSamplesRouteImport } from './routes/_authenticated/samples'
 import { Route as AuthenticatedStylesRouteImport } from './routes/_authenticated/styles'
+import { Route as AuthenticatedStylesStyleIdRouteImport } from './routes/_authenticated/styles.$styleId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -42,6 +45,11 @@ const AuthenticatedBuyersRoute = AuthenticatedBuyersRouteImport.update({
   path: '/buyers',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCostingsRoute = AuthenticatedCostingsRouteImport.update({
+  id: '/costings',
+  path: '/costings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -52,29 +60,46 @@ const AuthenticatedInquiriesRoute = AuthenticatedInquiriesRouteImport.update({
   path: '/inquiries',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedSamplesRoute = AuthenticatedSamplesRouteImport.update({
+  id: '/samples',
+  path: '/samples',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedStylesRoute = AuthenticatedStylesRouteImport.update({
   id: '/styles',
   path: '/styles',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedStylesStyleIdRoute =
+  AuthenticatedStylesStyleIdRouteImport.update({
+    id: '/$styleId',
+    path: '/$styleId',
+    getParentRoute: () => AuthenticatedStylesRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/buyers': typeof AuthenticatedBuyersRoute
+  '/costings': typeof AuthenticatedCostingsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/inquiries': typeof AuthenticatedInquiriesRoute
-  '/styles': typeof AuthenticatedStylesRoute
+  '/samples': typeof AuthenticatedSamplesRoute
+  '/styles': typeof AuthenticatedStylesRouteWithChildren
+  '/styles/$styleId': typeof AuthenticatedStylesStyleIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/buyers': typeof AuthenticatedBuyersRoute
+  '/costings': typeof AuthenticatedCostingsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/inquiries': typeof AuthenticatedInquiriesRoute
-  '/styles': typeof AuthenticatedStylesRoute
+  '/samples': typeof AuthenticatedSamplesRoute
+  '/styles': typeof AuthenticatedStylesRouteWithChildren
+  '/styles/$styleId': typeof AuthenticatedStylesStyleIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -83,9 +108,12 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/buyers': typeof AuthenticatedBuyersRoute
+  '/_authenticated/costings': typeof AuthenticatedCostingsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/inquiries': typeof AuthenticatedInquiriesRoute
-  '/_authenticated/styles': typeof AuthenticatedStylesRoute
+  '/_authenticated/samples': typeof AuthenticatedSamplesRoute
+  '/_authenticated/styles': typeof AuthenticatedStylesRouteWithChildren
+  '/_authenticated/styles/$styleId': typeof AuthenticatedStylesStyleIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -94,18 +122,24 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/buyers'
+    | '/costings'
     | '/dashboard'
     | '/inquiries'
+    | '/samples'
     | '/styles'
+    | '/styles/$styleId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/reset-password'
     | '/buyers'
+    | '/costings'
     | '/dashboard'
     | '/inquiries'
+    | '/samples'
     | '/styles'
+    | '/styles/$styleId'
   id:
     | '__root__'
     | '/'
@@ -113,9 +147,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/_authenticated/buyers'
+    | '/_authenticated/costings'
     | '/_authenticated/dashboard'
     | '/_authenticated/inquiries'
+    | '/_authenticated/samples'
     | '/_authenticated/styles'
+    | '/_authenticated/styles/$styleId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -162,6 +199,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBuyersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/costings': {
+      id: '/_authenticated/costings'
+      path: '/costings'
+      fullPath: '/costings'
+      preLoaderRoute: typeof AuthenticatedCostingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -176,6 +220,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedInquiriesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/samples': {
+      id: '/_authenticated/samples'
+      path: '/samples'
+      fullPath: '/samples'
+      preLoaderRoute: typeof AuthenticatedSamplesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/styles': {
       id: '/_authenticated/styles'
       path: '/styles'
@@ -183,21 +234,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStylesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/styles/$styleId': {
+      id: '/_authenticated/styles/$styleId'
+      path: '/$styleId'
+      fullPath: '/styles/$styleId'
+      preLoaderRoute: typeof AuthenticatedStylesStyleIdRouteImport
+      parentRoute: typeof AuthenticatedStylesRoute
+    }
   }
 }
 
+interface AuthenticatedStylesRouteChildren {
+  AuthenticatedStylesStyleIdRoute: typeof AuthenticatedStylesStyleIdRoute
+}
+
+const AuthenticatedStylesRouteChildren: AuthenticatedStylesRouteChildren = {
+  AuthenticatedStylesStyleIdRoute: AuthenticatedStylesStyleIdRoute,
+}
+
+const AuthenticatedStylesRouteWithChildren =
+  AuthenticatedStylesRoute._addFileChildren(AuthenticatedStylesRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedBuyersRoute: typeof AuthenticatedBuyersRoute
+  AuthenticatedCostingsRoute: typeof AuthenticatedCostingsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedInquiriesRoute: typeof AuthenticatedInquiriesRoute
-  AuthenticatedStylesRoute: typeof AuthenticatedStylesRoute
+  AuthenticatedSamplesRoute: typeof AuthenticatedSamplesRoute
+  AuthenticatedStylesRoute: typeof AuthenticatedStylesRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBuyersRoute: AuthenticatedBuyersRoute,
+  AuthenticatedCostingsRoute: AuthenticatedCostingsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedInquiriesRoute: AuthenticatedInquiriesRoute,
-  AuthenticatedStylesRoute: AuthenticatedStylesRoute,
+  AuthenticatedSamplesRoute: AuthenticatedSamplesRoute,
+  AuthenticatedStylesRoute: AuthenticatedStylesRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =

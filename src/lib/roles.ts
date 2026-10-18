@@ -13,6 +13,7 @@ import {
   MessageSquareQuote,
   Shirt,
   Calculator,
+  Scissors,
   type LucideIcon,
 } from "lucide-react";
 
@@ -34,7 +35,7 @@ export type NavItem = {
   icon: LucideIcon;
   roles: AppRole[] | "all";
   ready: boolean;
-  to?: "/dashboard" | "/buyers" | "/inquiries" | "/styles" | "/costings";
+  to?: "/dashboard" | "/buyers" | "/inquiries" | "/styles" | "/costings" | "/samples";
 };
 
 const ALL: AppRole[] | "all" = "all";
@@ -44,9 +45,10 @@ const MERCH_READ: AppRole[] = ["owner", "admin", "merchandiser", "commercial_off
 export const NAV_ITEMS: NavItem[] = [
   { key: "dashboard", label: "Dashboard", icon: LayoutDashboard, roles: ALL, ready: true, to: "/dashboard" },
   { key: "buyers", label: "Buyers", icon: Building2, roles: MERCH_READ, ready: true, to: "/buyers" },
-  { key: "inquiries", label: "Inquiries / RFQ", icon: MessageSquareQuote, roles: MERCH_READ, ready: false, to: "/inquiries" },
-  { key: "styles", label: "Styles & BOM", icon: Shirt, roles: ["owner", "admin", "merchandiser", "commercial_officer", "store_officer", "production_supervisor", "qc_officer"], ready: false, to: "/styles" },
-  { key: "costings", label: "Costing", icon: Calculator, roles: MERCH_READ, ready: false, to: "/costings" },
+  { key: "inquiries", label: "Inquiries / RFQ", icon: MessageSquareQuote, roles: MERCH_READ, ready: true, to: "/inquiries" },
+  { key: "styles", label: "Styles & BOM", icon: Shirt, roles: ["owner", "admin", "merchandiser", "commercial_officer", "store_officer", "production_supervisor", "qc_officer"], ready: true, to: "/styles" },
+  { key: "costings", label: "Costing", icon: Calculator, roles: MERCH_READ, ready: true, to: "/costings" },
+  { key: "samples", label: "Samples", icon: Scissors, roles: MERCH_READ, ready: true, to: "/samples" },
   { key: "orders", label: "Buyer PO", icon: ShoppingBag, roles: ["owner", "admin", "merchandiser"], ready: false },
   { key: "inventory", label: "Inventory", icon: Package, roles: ["owner", "admin", "store_officer", "merchandiser"], ready: false },
   { key: "scan", label: "QR Scan", icon: QrCode, roles: ["owner", "admin", "store_officer", "production_supervisor", "qc_officer"], ready: false },
