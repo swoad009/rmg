@@ -712,6 +712,60 @@ export type Database = {
         }
         Relationships: []
       }
+      samples: {
+        Row: {
+          buyer_comment: string | null
+          courier_ref: string | null
+          created_at: string
+          id: string
+          org_id: string | null
+          remarks: string | null
+          sent_date: string | null
+          status: string
+          sample_type: string
+          style_id: string
+        }
+        Insert: {
+          buyer_comment?: string | null
+          courier_ref?: string | null
+          created_at?: string
+          id?: string
+          org_id?: string | null
+          remarks?: string | null
+          sent_date?: string | null
+          status?: string
+          sample_type?: string
+          style_id: string
+        }
+        Update: {
+          buyer_comment?: string | null
+          courier_ref?: string | null
+          created_at?: string
+          id?: string
+          org_id?: string | null
+          remarks?: string | null
+          sent_date?: string | null
+          status?: string
+          sample_type?: string
+          style_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "samples_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "samples_style_id_fkey"
+            columns: ["style_id"]
+            isOneToOne: false
+            referencedRelation: "styles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       qc_inspections: {
         Row: {
           bundle_id: string | null

@@ -4,7 +4,7 @@
 - [x] Mobile menu animation
 - [x] Stage 1 audit + plan
 - [x] S1.1 Organizations (multi-company) + data scoped per organization
-- [ ] S1.2 Automatic audit log
+- [x] S1.2 Automatic audit log
 - [ ] S1.3 Buyers page
 - [ ] S1.4 Inquiries
 - [ ] S1.5 Styles & BOM
