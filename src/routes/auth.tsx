@@ -72,7 +72,7 @@ function AuthPage() {
     try {
       if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
-        if (error) throw new Error(error.message);
+        if (error) throw new Error("Email or password is incorrect, or the email isn't confirmed yet.");
         toast.success("Welcome back");
         navigate({ to: "/dashboard" });
       } else if (mode === "signup") {

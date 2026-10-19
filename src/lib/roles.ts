@@ -13,7 +13,6 @@ import {
   MessageSquareQuote,
   Shirt,
   Calculator,
-  Scissors,
   type LucideIcon,
 } from "lucide-react";
 
@@ -35,7 +34,7 @@ export type NavItem = {
   icon: LucideIcon;
   roles: AppRole[] | "all";
   ready: boolean;
-  to?: "/dashboard" | "/buyers" | "/inquiries" | "/styles" | "/costings" | "/samples";
+  to?: "/dashboard" | "/buyers" | "/inquiries" | "/styles" | "/costings";
 };
 
 const ALL: AppRole[] | "all" = "all";
@@ -48,7 +47,6 @@ export const NAV_ITEMS: NavItem[] = [
   { key: "inquiries", label: "Inquiries / RFQ", icon: MessageSquareQuote, roles: MERCH_READ, ready: true, to: "/inquiries" },
   { key: "styles", label: "Styles & BOM", icon: Shirt, roles: ["owner", "admin", "merchandiser", "commercial_officer", "store_officer", "production_supervisor", "qc_officer"], ready: true, to: "/styles" },
   { key: "costings", label: "Costing", icon: Calculator, roles: MERCH_READ, ready: true, to: "/costings" },
-  { key: "samples", label: "Samples", icon: Scissors, roles: MERCH_READ, ready: true, to: "/samples" },
   { key: "orders", label: "Buyer PO", icon: ShoppingBag, roles: ["owner", "admin", "merchandiser"], ready: false },
   { key: "inventory", label: "Inventory", icon: Package, roles: ["owner", "admin", "store_officer", "merchandiser"], ready: false },
   { key: "scan", label: "QR Scan", icon: QrCode, roles: ["owner", "admin", "store_officer", "production_supervisor", "qc_officer"], ready: false },

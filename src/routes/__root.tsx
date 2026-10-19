@@ -16,6 +16,11 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
+  const router = useRouter();
+  useEffect(() => {
+    // Some previews open "/index" — send it to the home page.
+    if (window.location.pathname.replace(/\/+$/, "") === "/index") router.navigate({ to: "/", replace: true });
+  }, [router]);
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
