@@ -118,9 +118,9 @@ function BuyerDialog({ buyer, onClose }: { buyer: Partial<Buyer>; onClose: () =>
   function submit(e: React.FormEvent) {
     e.preventDefault();
     const er: Record<string, string> = {};
-    if (!f.name.trim())  = "Buyer name is required";
-    if (!f.country.trim())  = "Country is required";
-    if (f.contact_email && !/^\S+@\S+\.\S+$/.test(f.contact_email))  = "Enter a valid email";
+    if (!f.name.trim()) er["name"] = "Buyer name is required";
+    if (!f.country.trim()) er["country"] = "Country is required";
+    if (f.contact_email && !/^\S+@\S+\.\S+$/.test(f.contact_email)) er["contact_email"] = "Enter a valid email";
     setErrors(er);
     if (!Object.keys(er).length) m.mutate();
   }

@@ -79,7 +79,7 @@ function CostingSheet() {
   function run(status?: string) {
     const er: Record<string, string> = {};
     FIELDS.forEach(({ k }) => { if (f[k] === "" || isNaN(Number(f[k])) || Number(f[k]) < 0) er[k] = "Enter 0 or more"; });
-    if (nums.profit_pct > 100)  = "Max 100%";
+    if (nums.profit_pct > 100) er["profit_pct"] = "Max 100%";
     setErrors(er);
     if (!Object.keys(er).length) save.mutate(status);
   }

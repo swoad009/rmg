@@ -116,11 +116,11 @@ function InquiryDialog({ initial, onClose }: { initial: Form; onClose: () => voi
   function submit(e: React.FormEvent) {
     e.preventDefault();
     const er: Record<string, string> = {};
-    if (!f.buyer_id)  = "Choose a buyer";
-    if (!f.inquiry_no.trim())  = "Required";
-    if (!f.product_type.trim())  = "Required";
-    if (!(Number(f.target_qty) > 0))  = "Enter a quantity above 0";
-    if (f.target_price && !(Number(f.target_price) > 0))  = "Must be above 0";
+    if (!f.buyer_id) er["buyer_id"] = "Choose a buyer";
+    if (!f.inquiry_no.trim()) er["inquiry_no"] = "Required";
+    if (!f.product_type.trim()) er["product_type"] = "Required";
+    if (!(Number(f.target_qty) > 0)) er["target_qty"] = "Enter a quantity above 0";
+    if (f.target_price && !(Number(f.target_price) > 0)) er["target_price"] = "Must be above 0";
     setErrors(er);
     if (!Object.keys(er).length) m.mutate();
   }
@@ -139,10 +139,10 @@ function InquiryDialog({ initial, onClose }: { initial: Form; onClose: () => voi
           <div className="space-y-1 sm:col-span-2">
             <Label>Buyer *</Label>
             <Select value={f.buyer_id} onValueChange={(v) => setF({ ...f, buyer_id: v, currency: buyers.data?.find((b) => b.id === v)?.currency ?? f.currency })}>
-              <SelectTrigger aria-invalid={!!}><SelectValue placeholder={buyers.isLoading ? "Loading…" : "Choose buyer"} /></SelectTrigger>
+              <SelectTrigger aria-invalid={!!errors["buyer_id"]}><SelectValue placeholder={buyers.isLoading ? "Loading…" : "Choose buyer"} /></SelectTrigger>
               <SelectContent>{buyers.data?.map((b) => <SelectItem key={b.id} value={b.id}>{b.name}</SelectItem>)}</SelectContent>
             </Select>
-            { && <p className="text-xs text-destructive">{}</p>}
+            {errors["buyer_id"] && <p className="text-xs text-destructive">{errors["buyer_id"]}</p>}
           </div>
           {inp("inquiry_no", "Inquiry no *")}
           {inp("style_ref", "Buyer style ref", "text", "HM-TS-2207")}

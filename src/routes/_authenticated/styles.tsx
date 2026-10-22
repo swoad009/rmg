@@ -114,10 +114,10 @@ function NewStyleDialog({ onClose }: { onClose: () => void }) {
   function submit(e: React.FormEvent) {
     e.preventDefault();
     const er: Record<string, string> = {};
-    if (!f.buyer_id)  = "Choose a buyer";
-    if (!f.style_no.trim())  = "Required";
-    if (!splitList(f.colors).length)  = "Add at least one colour";
-    if (!splitList(f.sizes).length)  = "Add at least one size";
+    if (!f.buyer_id) er["buyer_id"] = "Choose a buyer";
+    if (!f.style_no.trim()) er["style_no"] = "Required";
+    if (!splitList(f.colors).length) er["colors"] = "Add at least one colour";
+    if (!splitList(f.sizes).length) er["sizes"] = "Add at least one size";
     setErrors(er);
     if (!Object.keys(er).length) m.mutate();
   }
@@ -137,10 +137,10 @@ function NewStyleDialog({ onClose }: { onClose: () => void }) {
           <div className="space-y-1">
             <Label>Buyer *</Label>
             <Select value={f.buyer_id} onValueChange={(v) => setF({ ...f, buyer_id: v, inquiry_id: "none" })}>
-              <SelectTrigger aria-invalid={!!}><SelectValue placeholder="Choose buyer" /></SelectTrigger>
+              <SelectTrigger aria-invalid={!!errors["buyer_id"]}><SelectValue placeholder="Choose buyer" /></SelectTrigger>
               <SelectContent>{buyers.data?.map((b) => <SelectItem key={b.id} value={b.id}>{b.name}</SelectItem>)}</SelectContent>
             </Select>
-            { && <p className="text-xs text-destructive">{}</p>}
+            {errors["buyer_id"] && <p className="text-xs text-destructive">{errors["buyer_id"]}</p>}
           </div>
           <div className="space-y-1">
             <Label>From inquiry</Label>
