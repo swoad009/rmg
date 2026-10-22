@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { canWriteMerch } from "@/lib/roles";
 import { useMe } from "@/lib/use-me";
-import { STYLE_STATUS } from "./styles";
+import { STYLE_STATUS } from "@/lib/rmg";
 
 export const Route = createFileRoute("/_authenticated/styles_/$id")({
   head: () => ({ meta: [{ title: "Style detail — SutoTrack RMG" }, { name: "description", content: "Colour-size matrix and BOM for a style." }] }),

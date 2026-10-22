@@ -14,13 +14,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { canWriteMerch } from "@/lib/roles";
 import { useMe } from "@/lib/use-me";
 import { useBuyerOptions } from "@/lib/use-buyers";
+import { STYLE_STATUS } from "@/lib/rmg";
 
 export const Route = createFileRoute("/_authenticated/styles")({
   head: () => ({ meta: [{ title: "Styles & BOM — SutoTrack RMG" }, { name: "description", content: "Styles, colour-size breakdown and bill of materials." }] }),
   component: StylesPage,
 });
 
-export const STYLE_STATUS = ["development", "costing", "sampling", "approved"];
+
 const splitList = (s: string) => s.split(",").map((x) => x.trim()).filter(Boolean);
 
 function StylesPage() {

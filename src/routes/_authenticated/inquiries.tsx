@@ -15,13 +15,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { canWriteMerch } from "@/lib/roles";
 import { useMe } from "@/lib/use-me";
 import { useBuyerOptions } from "@/lib/use-buyers";
+import { INQ_STATUS } from "@/lib/rmg";
 
 export const Route = createFileRoute("/_authenticated/inquiries")({
   head: () => ({ meta: [{ title: "Inquiries / RFQ — SutoTrack RMG" }, { name: "description", content: "Track buyer inquiries and RFQs." }] }),
   component: InquiriesPage,
 });
 
-export const INQ_STATUS = ["new", "costing", "quoted", "won", "lost"];
+
 
 type Form = { id?: string; buyer_id: string; inquiry_no: string; style_ref: string; product_type: string; target_qty: string; target_price: string; currency: string; target_ship_date: string; status: string; notes: string };
 
