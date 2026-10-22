@@ -14,13 +14,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { canWriteMerch } from "@/lib/roles";
 import { useMe } from "@/lib/use-me";
 import { useBuyerOptions } from "@/lib/use-buyers";
+import { STYLE_STATUS } from "@/lib/rmg";
 
 export const Route = createFileRoute("/_authenticated/styles")({
   head: () => ({ meta: [{ title: "Styles & BOM — SutoTrack RMG" }, { name: "description", content: "Styles, colour-size breakdown and bill of materials." }] }),
   component: StylesPage,
 });
 
-export const STYLE_STATUS = ["development", "costing", "sampling", "approved"];
+
 const splitList = (s: string) => s.split(",").map((x) => x.trim()).filter(Boolean);
 
 function StylesPage() {
@@ -51,7 +52,7 @@ function StylesPage() {
       <PageHeader title="Styles & BOM" subtitle="Colour-size breakdown and materials for every style"
         action={canWrite && <Button onClick={() => setCreating(true)}><Plus className="mr-1 h-4 w-4" /> New style</Button>} />
       <Toolbar search={search} onSearch={(v) => { setSearch(v); setPage(0); }} placeholder="Search style no, buyer, fabric…"
-        filter={status} onFilter={(v) => { setStatus(v); setPage(0); }} options={STYLE_STATUS.map((s) => ({ value: s, label: s[0].toUpperCase() + s.slice(1) }))} />
+        filter={status} onFilter={(v) => { setStatus(v); setPage(0); }} options={STYLE_STATUS.map((s) => ({ value: s, label: s.charAt(0).toUpperCase() + s.slice(1) }))} />
       <Card>
         {q.isLoading ? <LoadingRows /> : q.isError ? <ErrorState message={errMsg(q.error)} onRetry={() => q.refetch()} /> : rows.length === 0 ? (
           <EmptyState title={search || status !== "all" ? "No styles match" : "No styles yet"} hint="Create a style to build its colour-size matrix and BOM." />
@@ -113,10 +114,10 @@ function NewStyleDialog({ onClose }: { onClose: () => void }) {
   function submit(e: React.FormEvent) {
     e.preventDefault();
     const er: Record<string, string> = {};
-    if (!f.buyer_id) er.buyer_id = "Choose a buyer";
-    if (!f.style_no.trim()) er.style_no = "Required";
-    if (!splitList(f.colors).length) er.colors = "Add at least one colour";
-    if (!splitList(f.sizes).length) er.sizes = "Add at least one size";
+    if (!f.buyer_id) er["buyer_id"] = "Choose a buyer";
+    if (!f.style_no.trim()) er["style_no"] = "Required";
+    if (!splitList(f.colors).length) er["colors"] = "Add at least one colour";
+    if (!splitList(f.sizes).length) er["sizes"] = "Add at least one size";
     setErrors(er);
     if (!Object.keys(er).length) m.mutate();
   }
@@ -136,10 +137,10 @@ function NewStyleDialog({ onClose }: { onClose: () => void }) {
           <div className="space-y-1">
             <Label>Buyer *</Label>
             <Select value={f.buyer_id} onValueChange={(v) => setF({ ...f, buyer_id: v, inquiry_id: "none" })}>
-              <SelectTrigger aria-invalid={!!errors.buyer_id}><SelectValue placeholder="Choose buyer" /></SelectTrigger>
+              <SelectTrigger aria-invalid={!!errors["buyer_id"]}><SelectValue placeholder="Choose buyer" /></SelectTrigger>
               <SelectContent>{buyers.data?.map((b) => <SelectItem key={b.id} value={b.id}>{b.name}</SelectItem>)}</SelectContent>
             </Select>
-            {errors.buyer_id && <p className="text-xs text-destructive">{errors.buyer_id}</p>}
+            {errors["buyer_id"] && <p className="text-xs text-destructive">{errors["buyer_id"]}</p>}
           </div>
           <div className="space-y-1">
             <Label>From inquiry</Label>

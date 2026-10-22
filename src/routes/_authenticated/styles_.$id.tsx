@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { canWriteMerch } from "@/lib/roles";
 import { useMe } from "@/lib/use-me";
-import { STYLE_STATUS } from "./styles";
+import { STYLE_STATUS } from "@/lib/rmg";
 
 export const Route = createFileRoute("/_authenticated/styles_/$id")({
   head: () => ({ meta: [{ title: "Style detail — SutoTrack RMG" }, { name: "description", content: "Colour-size matrix and BOM for a style." }] }),
@@ -224,11 +224,11 @@ function BomDialog({ styleId, item, onClose }: { styleId: string; item: Partial<
   function submit(e: React.FormEvent) {
     e.preventDefault();
     const er: Record<string, string> = {};
-    if (!f.item_name.trim()) er.item_name = "Required";
-    if (!f.unit.trim()) er.unit = "Required";
-    if (!(Number(f.consumption_per_pc) > 0)) er.consumption_per_pc = "Must be above 0";
-    if (Number(f.wastage_pct) < 0 || Number(f.wastage_pct) > 50) er.wastage_pct = "0–50%";
-    if (Number(f.unit_price) < 0) er.unit_price = "Cannot be negative";
+    if (!f.item_name.trim()) er["item_name"] = "Required";
+    if (!f.unit.trim()) er["unit"] = "Required";
+    if (!(Number(f.consumption_per_pc) > 0)) er["consumption_per_pc"] = "Must be above 0";
+    if (Number(f.wastage_pct) < 0 || Number(f.wastage_pct) > 50) er["wastage_pct"] = "0–50%";
+    if (Number(f.unit_price) < 0) er["unit_price"] = "Cannot be negative";
     setErrors(er);
     if (!Object.keys(er).length) m.mutate();
   }

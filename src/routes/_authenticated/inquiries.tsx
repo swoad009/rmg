@@ -15,13 +15,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { canWriteMerch } from "@/lib/roles";
 import { useMe } from "@/lib/use-me";
 import { useBuyerOptions } from "@/lib/use-buyers";
+import { INQ_STATUS } from "@/lib/rmg";
 
 export const Route = createFileRoute("/_authenticated/inquiries")({
   head: () => ({ meta: [{ title: "Inquiries / RFQ — SutoTrack RMG" }, { name: "description", content: "Track buyer inquiries and RFQs." }] }),
   component: InquiriesPage,
 });
 
-export const INQ_STATUS = ["new", "costing", "quoted", "won", "lost"];
+
 
 type Form = { id?: string; buyer_id: string; inquiry_no: string; style_ref: string; product_type: string; target_qty: string; target_price: string; currency: string; target_ship_date: string; status: string; notes: string };
 
@@ -54,7 +55,7 @@ function InquiriesPage() {
       <PageHeader title="Inquiries / RFQ" subtitle="Every buyer request, from first contact to won or lost"
         action={canWrite && <Button onClick={() => setEditing(blank)}><Plus className="mr-1 h-4 w-4" /> New inquiry</Button>} />
       <Toolbar search={search} onSearch={(v) => { setSearch(v); setPage(0); }} placeholder="Search inquiry no, style, buyer…"
-        filter={status} onFilter={(v) => { setStatus(v); setPage(0); }} options={INQ_STATUS.map((s) => ({ value: s, label: s[0].toUpperCase() + s.slice(1) }))} />
+        filter={status} onFilter={(v) => { setStatus(v); setPage(0); }} options={INQ_STATUS.map((s) => ({ value: s, label: s.charAt(0).toUpperCase() + s.slice(1) }))} />
       <Card>
         {q.isLoading ? <LoadingRows /> : q.isError ? <ErrorState message={errMsg(q.error)} onRetry={() => q.refetch()} /> : rows.length === 0 ? (
           <EmptyState title={search || status !== "all" ? "No inquiries match" : "No inquiries yet"} hint="Log a buyer RFQ to start costing." />
@@ -115,11 +116,11 @@ function InquiryDialog({ initial, onClose }: { initial: Form; onClose: () => voi
   function submit(e: React.FormEvent) {
     e.preventDefault();
     const er: Record<string, string> = {};
-    if (!f.buyer_id) er.buyer_id = "Choose a buyer";
-    if (!f.inquiry_no.trim()) er.inquiry_no = "Required";
-    if (!f.product_type.trim()) er.product_type = "Required";
-    if (!(Number(f.target_qty) > 0)) er.target_qty = "Enter a quantity above 0";
-    if (f.target_price && !(Number(f.target_price) > 0)) er.target_price = "Must be above 0";
+    if (!f.buyer_id) er["buyer_id"] = "Choose a buyer";
+    if (!f.inquiry_no.trim()) er["inquiry_no"] = "Required";
+    if (!f.product_type.trim()) er["product_type"] = "Required";
+    if (!(Number(f.target_qty) > 0)) er["target_qty"] = "Enter a quantity above 0";
+    if (f.target_price && !(Number(f.target_price) > 0)) er["target_price"] = "Must be above 0";
     setErrors(er);
     if (!Object.keys(er).length) m.mutate();
   }
@@ -138,10 +139,10 @@ function InquiryDialog({ initial, onClose }: { initial: Form; onClose: () => voi
           <div className="space-y-1 sm:col-span-2">
             <Label>Buyer *</Label>
             <Select value={f.buyer_id} onValueChange={(v) => setF({ ...f, buyer_id: v, currency: buyers.data?.find((b) => b.id === v)?.currency ?? f.currency })}>
-              <SelectTrigger aria-invalid={!!errors.buyer_id}><SelectValue placeholder={buyers.isLoading ? "Loading…" : "Choose buyer"} /></SelectTrigger>
+              <SelectTrigger aria-invalid={!!errors["buyer_id"]}><SelectValue placeholder={buyers.isLoading ? "Loading…" : "Choose buyer"} /></SelectTrigger>
               <SelectContent>{buyers.data?.map((b) => <SelectItem key={b.id} value={b.id}>{b.name}</SelectItem>)}</SelectContent>
             </Select>
-            {errors.buyer_id && <p className="text-xs text-destructive">{errors.buyer_id}</p>}
+            {errors["buyer_id"] && <p className="text-xs text-destructive">{errors["buyer_id"]}</p>}
           </div>
           {inp("inquiry_no", "Inquiry no *")}
           {inp("style_ref", "Buyer style ref", "text", "HM-TS-2207")}

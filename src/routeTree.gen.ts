@@ -14,9 +14,11 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedBuyersRouteImport } from './routes/_authenticated/buyers'
+import { Route as AuthenticatedCostingsRouteImport } from './routes/_authenticated/costings'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedInquiriesRouteImport } from './routes/_authenticated/inquiries'
 import { Route as AuthenticatedStylesRouteImport } from './routes/_authenticated/styles'
+import { Route as AuthenticatedCostingsIdRouteImport } from './routes/_authenticated/costings_.$id'
 import { Route as AuthenticatedStylesIdRouteImport } from './routes/_authenticated/styles_.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -43,6 +45,11 @@ const AuthenticatedBuyersRoute = AuthenticatedBuyersRouteImport.update({
   path: '/buyers',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCostingsRoute = AuthenticatedCostingsRouteImport.update({
+  id: '/costings',
+  path: '/costings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -58,6 +65,11 @@ const AuthenticatedStylesRoute = AuthenticatedStylesRouteImport.update({
   path: '/styles',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCostingsIdRoute = AuthenticatedCostingsIdRouteImport.update({
+  id: '/costings_/$id',
+  path: '/costings/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedStylesIdRoute = AuthenticatedStylesIdRouteImport.update({
   id: '/styles_/$id',
   path: '/styles/$id',
@@ -69,9 +81,11 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/buyers': typeof AuthenticatedBuyersRoute
+  '/costings': typeof AuthenticatedCostingsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/inquiries': typeof AuthenticatedInquiriesRoute
   '/styles': typeof AuthenticatedStylesRoute
+  '/costings/$id': typeof AuthenticatedCostingsIdRoute
   '/styles/$id': typeof AuthenticatedStylesIdRoute
 }
 export interface FileRoutesByTo {
@@ -79,9 +93,11 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/buyers': typeof AuthenticatedBuyersRoute
+  '/costings': typeof AuthenticatedCostingsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/inquiries': typeof AuthenticatedInquiriesRoute
   '/styles': typeof AuthenticatedStylesRoute
+  '/costings/$id': typeof AuthenticatedCostingsIdRoute
   '/styles/$id': typeof AuthenticatedStylesIdRoute
 }
 export interface FileRoutesById {
@@ -91,9 +107,11 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/buyers': typeof AuthenticatedBuyersRoute
+  '/_authenticated/costings': typeof AuthenticatedCostingsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/inquiries': typeof AuthenticatedInquiriesRoute
   '/_authenticated/styles': typeof AuthenticatedStylesRoute
+  '/_authenticated/costings_/$id': typeof AuthenticatedCostingsIdRoute
   '/_authenticated/styles_/$id': typeof AuthenticatedStylesIdRoute
 }
 export interface FileRouteTypes {
@@ -103,9 +121,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/buyers'
+    | '/costings'
     | '/dashboard'
     | '/inquiries'
     | '/styles'
+    | '/costings/$id'
     | '/styles/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -113,9 +133,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/buyers'
+    | '/costings'
     | '/dashboard'
     | '/inquiries'
     | '/styles'
+    | '/costings/$id'
     | '/styles/$id'
   id:
     | '__root__'
@@ -124,9 +146,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/_authenticated/buyers'
+    | '/_authenticated/costings'
     | '/_authenticated/dashboard'
     | '/_authenticated/inquiries'
     | '/_authenticated/styles'
+    | '/_authenticated/costings_/$id'
     | '/_authenticated/styles_/$id'
   fileRoutesById: FileRoutesById
 }
@@ -174,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBuyersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/costings': {
+      id: '/_authenticated/costings'
+      path: '/costings'
+      fullPath: '/costings'
+      preLoaderRoute: typeof AuthenticatedCostingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -195,6 +226,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStylesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/costings_/$id': {
+      id: '/_authenticated/costings_/$id'
+      path: '/costings/$id'
+      fullPath: '/costings/$id'
+      preLoaderRoute: typeof AuthenticatedCostingsIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/styles_/$id': {
       id: '/_authenticated/styles_/$id'
       path: '/styles/$id'
@@ -207,17 +245,21 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedBuyersRoute: typeof AuthenticatedBuyersRoute
+  AuthenticatedCostingsRoute: typeof AuthenticatedCostingsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedInquiriesRoute: typeof AuthenticatedInquiriesRoute
   AuthenticatedStylesRoute: typeof AuthenticatedStylesRoute
+  AuthenticatedCostingsIdRoute: typeof AuthenticatedCostingsIdRoute
   AuthenticatedStylesIdRoute: typeof AuthenticatedStylesIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBuyersRoute: AuthenticatedBuyersRoute,
+  AuthenticatedCostingsRoute: AuthenticatedCostingsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedInquiriesRoute: AuthenticatedInquiriesRoute,
   AuthenticatedStylesRoute: AuthenticatedStylesRoute,
+  AuthenticatedCostingsIdRoute: AuthenticatedCostingsIdRoute,
   AuthenticatedStylesIdRoute: AuthenticatedStylesIdRoute,
 }
 
