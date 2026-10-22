@@ -4,6 +4,7 @@ import { ArrowLeft, Check, Loader2, Save, Send, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import type { TablesUpdate } from "@/integrations/supabase/types";
 import { AppShell } from "@/components/app-shell";
 import { Card, EmptyState, ErrorState, LoadingRows, StatusBadge, errMsg } from "@/components/data-states";
 import { Button } from "@/components/ui/button";
@@ -62,7 +63,7 @@ function CostingSheet() {
 
   const save = useMutation({
     mutationFn: async (status?: string) => {
-      const payload: Record<string, unknown> = { ...nums, notes: notes.trim() || null };
+      const payload: TablesUpdate<"costings"> = { ...nums, notes: notes.trim() || null };
       if (status) payload.status = status;
       const { error } = await supabase.from("costings").update(payload).eq("id", id);
       if (error) throw error;
@@ -78,7 +79,7 @@ function CostingSheet() {
   function run(status?: string) {
     const er: Record<string, string> = {};
     FIELDS.forEach(({ k }) => { if (f[k] === "" || isNaN(Number(f[k])) || Number(f[k]) < 0) er[k] = "Enter 0 or more"; });
-    if (nums.profit_pct > 100) er.profit_pct = "Max 100%";
+    if (nums.profit_pct > 100)  = "Max 100%";
     setErrors(er);
     if (!Object.keys(er).length) save.mutate(status);
   }

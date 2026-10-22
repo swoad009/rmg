@@ -40,7 +40,7 @@ export function Toolbar({
         <Input value={search} onChange={(e) => onSearch(e.target.value)} placeholder={placeholder} className="pl-9" />
       </div>
       {options && onFilter && (
-        <Select value={filter} onValueChange={onFilter}>
+        <Select value={filter ?? "all"} onValueChange={onFilter}>
           <SelectTrigger className="sm:w-48">
             <SelectValue />
           </SelectTrigger>

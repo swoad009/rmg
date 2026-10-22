@@ -46,7 +46,7 @@ function CostingsPage() {
       <PageHeader title="Costing" subtitle="Cost breakdown, FOB price and approval"
         action={canWrite && <Button onClick={() => setCreating(true)}><Plus className="mr-1 h-4 w-4" /> New costing</Button>} />
       <Toolbar search={search} onSearch={(v) => { setSearch(v); setPage(0); }} placeholder="Search costing, style, buyer…"
-        filter={status} onFilter={(v) => { setStatus(v); setPage(0); }} options={COSTING_STATUS.map((s) => ({ value: s, label: s[0].toUpperCase() + s.slice(1) }))} />
+        filter={status} onFilter={(v) => { setStatus(v); setPage(0); }} options={COSTING_STATUS.map((s) => ({ value: s, label: s.charAt(0).toUpperCase() + s.slice(1) }))} />
       <Card>
         {q.isLoading ? <LoadingRows /> : q.isError ? <ErrorState message={errMsg(q.error)} onRetry={() => q.refetch()} /> : rows.length === 0 ? (
           <EmptyState title={search || status !== "all" ? "No costings match" : "No costings yet"} hint="Create a costing sheet from a style." />
